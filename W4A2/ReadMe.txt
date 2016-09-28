@@ -1,0 +1,2 @@
+The program illustrates the differences between a database utilizing hashed entries and a database using non-hashed entries. Furthermore, the program reveals that although the time cost of calculating a hash does increase the time to add an entry to a hashed database over a non hashed database, this cost is mitigate by the decrease in time required to find a specific data entry. Thus, as the number of data entries increases in a database, the difference in time required to find an entry grows between a hashed database and a non-hashed database.
+
