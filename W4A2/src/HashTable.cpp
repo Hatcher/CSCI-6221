@@ -23,15 +23,13 @@ HashTable::~HashTable() {
 }
 
 
-bool HashTable::store(std::string name, int age){
-	bool result = false;
+void HashTable::store(std::string name, int age){
 	int hashIndex = hash(name);
 	if(this->hTable[hashIndex] == nullptr){
 		this->hTable[hashIndex] = new linkedList();
 	}
 	linkedList *temp = this->hTable[hashIndex];
-	result = temp->add(name, age);
-	return result;
+	temp->add(name, age);
 }
 void HashTable::find(std::string name){
 	int hashValue = hash(name);

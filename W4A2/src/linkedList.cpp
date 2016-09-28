@@ -46,7 +46,7 @@ void linkedList::find(std::string nameToFind){
 }
 
 
-bool linkedList::add(std::string nameToAdd, int age){
+void linkedList::add(std::string nameToAdd, int age){
 	Node *temp = this->root;
 	Node *newNode = new Node(temp, nameToAdd, age);
 	if(temp != nullptr){
@@ -57,5 +57,4 @@ bool linkedList::add(std::string nameToAdd, int age){
 	}else{
 		this->root = newNode;
 	}
-	return true;
 }

@@ -8,42 +8,80 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <time.h>
+#include <fstream>
+#include <vector>
 #include "HashTable.h"
 
 using namespace std;
 
-void personHashDatabase(){
-	std::string names[25] = {"andy","josh","patrick","collin","mason","max","olivia","michelle","tan","lemon","anthony","beau","greenfeld","trump","hillary","larry","mimie","neil","kris","austin","leah","mason","jack","john","dave"};
-	bool adding = false;
-	HashTable *hashy = new HashTable();
-	for(int i = 0; i < 1000; i++){
-		std::string named = names[rand() % 25];
+void personHashDatabase(vector<string> inputVector, string nameToFind){
+	HashTable* hashDatabase = new HashTable();
+	double timeToStore = 0;
+	for(auto i = inputVector.begin(); i < inputVector.end(); i++){
 		int age = rand() % 100 + 1;
-		adding = hashy->store(named, age);
+		clock_t begin = clock();
+		hashDatabase->store(*i, age);
+		clock_t end = clock();
+		timeToStore= timeToStore + double(end-begin)/CLOCKS_PER_SEC;
 	}
-	hashy->find("michelle");
-	adding = hashy->store("Francis", 18);
-	hashy->find("Francis");
-	delete hashy;
+
+	cout << "The time required to add 1000 people with hashing was " << timeToStore << endl;
+
+	double timeToFind = 0;
+	clock_t begin = clock();
+	hashDatabase->find(nameToFind);
+	clock_t end = clock();
+	timeToFind = timeToFind + double(end-begin)/CLOCKS_PER_SEC;
+
+	cout << "The time to find " << nameToFind << " in the hashed database is "<< timeToFind << endl;
+	delete hashDatabase;
 }
 
-void personDatabase(){
-	std::string names[25] = {"andy","josh","patrick","collin","mason","max","olivia","michelle","tan","lemon","anthony","beau","greenfeld","trump","hillary","larry","mimie","neil","kris","austin","leah","mason","jack","john","dave"};
-	linkedList* listy = new linkedList();
-	bool adding = false;
-	for(int i = 0; i < 1000; i++){
-		std::string named = names[rand() % 25];
+void personDatabase(vector<string> inputVector, string nameToFind){
+	linkedList* nonHashDatabase = new linkedList();
+	double timeToStore = 0;
+	for(auto i = inputVector.begin(); i < inputVector.end(); i++){
 		int age = rand() % 100 + 1;
-		adding = listy->add(named, age);
+		clock_t begin = clock();
+		nonHashDatabase->add(*i, age);
+		clock_t end = clock();
+		timeToStore= timeToStore + double(end-begin)/CLOCKS_PER_SEC;
 	}
-	listy->find("michelle");
-	listy->find("Francis");
-	delete listy;
+
+
+
+	cout << "The time required to add 1000 people without hashing was " << timeToStore << endl;
+
+	double timeToFind = 0;
+	clock_t begin = clock();
+	nonHashDatabase->find(nameToFind);
+	clock_t end = clock();
+	timeToFind = timeToFind + double(end-begin)/CLOCKS_PER_SEC;
+
+	cout << "The time required to find " << nameToFind << " in the non-hashed database was " << timeToFind << endl;
+	delete nonHashDatabase;
 }
 
 int main() {
+	vector<string> namesVector;
+	ifstream namesFile("names.txt");
+	if(namesFile.is_open()){
+		std::string nameOfPerson;
+		for(int i = 0; i < 1000; i++){
+			getline(namesFile, nameOfPerson);
+			namesVector.push_back(nameOfPerson);
+		}
+	}else{
+		cout << " oops " << endl;
+	}
+	namesFile.close();
+	int selection = rand() % namesVector.size();
+	string nameToFind = namesVector[selection];
 
-	personHashDatabase();
-	personDatabase();
+	personHashDatabase(namesVector, nameToFind);
+	personDatabase(namesVector, nameToFind);
+
+	cout << " "
 	return 0;
 }

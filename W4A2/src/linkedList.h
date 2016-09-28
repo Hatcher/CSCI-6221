@@ -14,7 +14,7 @@ public:
 	linkedList();
 	virtual ~linkedList();
 	void find(std::string nameToFind);
-	bool add(std::string nameToFind, int age);
+	void add(std::string nameToFind, int age);
 
 private:
 	Node* root;

@@ -15,7 +15,7 @@ class HashTable {
 public:
 	HashTable();
 	virtual ~HashTable();
-	bool store(std::string name, int age);
+	void store(std::string name, int age);
 	void find(std::string name);
 private:
 	int hash(std::string name);
