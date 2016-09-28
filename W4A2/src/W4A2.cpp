@@ -15,11 +15,13 @@
 
 using namespace std;
 
-void personHashDatabase(vector<string> inputVector, string nameToFind){
+void personHashDatabase(vector<string> inputVector, int *inputAges, string nameToFind){
 	HashTable* hashDatabase = new HashTable();
 	double timeToStore = 0;
+	int position = 0;
 	for(auto i = inputVector.begin(); i < inputVector.end(); i++){
-		int age = rand() % 100 + 1;
+		int age = inputAges[position];
+		position++;
 		clock_t begin = clock();
 		hashDatabase->store(*i, age);
 		clock_t end = clock();
@@ -38,11 +40,13 @@ void personHashDatabase(vector<string> inputVector, string nameToFind){
 	delete hashDatabase;
 }
 
-void personDatabase(vector<string> inputVector, string nameToFind){
+void personDatabase(vector<string> inputVector, int *inputAges, string nameToFind){
 	linkedList* nonHashDatabase = new linkedList();
 	double timeToStore = 0;
+	int position = 0;
 	for(auto i = inputVector.begin(); i < inputVector.end(); i++){
-		int age = rand() % 100 + 1;
+		int age = inputAges[position];
+		position++;
 		clock_t begin = clock();
 		nonHashDatabase->add(*i, age);
 		clock_t end = clock();
@@ -73,13 +77,18 @@ int main() {
 			namesVector.push_back(nameOfPerson);
 		}
 	}else{
-		cout << " oops " << endl;
+		cout << " file could not be found " << endl;
 	}
 	namesFile.close();
+	srand(time(NULL));
 	int selection = rand() % namesVector.size();
 	string nameToFind = namesVector[selection];
 
-	personHashDatabase(namesVector, nameToFind);
-	personDatabase(namesVector, nameToFind);
+	int *ages = new int[namesVector.size()];
+	for(int i = 0; i < namesVector.size(); i++){
+		ages[i] = rand()%100+1;
+	}
+	personHashDatabase(namesVector, ages, nameToFind);
+	personDatabase(namesVector, ages, nameToFind);
 	return 0;
 }
