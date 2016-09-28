@@ -81,7 +81,5 @@ int main() {
 
 	personHashDatabase(namesVector, nameToFind);
 	personDatabase(namesVector, nameToFind);
-
-	cout << " "
 	return 0;
 }
