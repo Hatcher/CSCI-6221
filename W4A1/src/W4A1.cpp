@@ -56,8 +56,5 @@ int main() {
 	}
 	cout << "The time to make " << totalCallsToMake << " arrays, of size " << arraySize << ", on the stack was " << timeToMakeStackArray << endl;
 
-
-
-
 	return 0;
 }
