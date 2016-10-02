@@ -78,7 +78,6 @@ public class Queue{
 		if(temp == null){
 			System.out.print("There is nothing in this queue");
 		}else{
-			System.out.println(temp.getName());
 			while(temp != null){
 				System.out.println(temp.getName());
 				temp = temp.getNext();

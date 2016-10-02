@@ -20,8 +20,11 @@ public class W5A1 {
 		System.out.println(deq);
 		deq = test.dequeue();
 		System.out.println(deq);
-		System.out.println("testing");
+		System.out.println("testing if print all will print all the elements in queue");
 		
+	
+		test.enqueue("andy", 1);
+		test.enqueue("john", 10);
 		test.printAll();
 		
 		
