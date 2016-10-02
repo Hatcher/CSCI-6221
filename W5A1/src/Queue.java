@@ -26,7 +26,7 @@ public class Queue{
 	 *	Returns the string from the queue that has the highest priority
 	 *	Deletes the node with the highest priority
 	 */
-	String dequeue(){
+	public String dequeue(){
 		String result;
 		if(root == null){
 			result = "Empty Queue, nothing to remove";
@@ -66,6 +66,10 @@ public class Queue{
 		root = null;	
 	}
 	
+	Node getRoot(){
+		return root;
+	}
+	
 	/*
 	 * Test to print out what is in the queue
 	 */
@@ -81,5 +85,53 @@ public class Queue{
 				
 			}
 		}
+	}
+	
+	public String toString(){
+		String result = "Empty queue";
+		return result;
+	}
+	
+	public Boolean equals(Queue inputQueue){
+		Boolean outerTruth = true;
+		Node comparisonNode = root;	
+		
+		
+		while(comparisonNode != null){
+			Node inputComparisonNode = inputQueue.getRoot();
+			Boolean innerTruth = false;
+			if(comparisonNode.equals(inputComparisonNode) == true){
+				innerTruth = true;
+			}else{
+				while(inputComparisonNode != null){
+					if(comparisonNode.equals(inputComparisonNode) == true){
+						innerTruth = true;
+					}
+					inputComparisonNode = inputComparisonNode.getNext();
+				}
+			}
+			inputComparisonNode = inputQueue.getRoot();
+			if(outerTruth == false || innerTruth == false){
+				outerTruth = false;
+			}
+			comparisonNode = comparisonNode.getNext();
+		}
+		return outerTruth;
+	}
+	
+	public int hashCode(){
+		int result = 0;
+		Node temp = root;
+		//for each node in queue
+		while(temp != null){
+			//find hashCode() of node
+			int nodeHash = temp.hashCode();
+			//add nodeHash to result
+			result = result + nodeHash;
+			//go to next node
+			temp = temp.getNext();
+		}
+		//return result		
+		return result;
 	}
 }

@@ -33,5 +33,27 @@ public class Node {
 	int getPriority(){
 		return priority;
 	}
+	
+	public Boolean equals(Node inputNode){
+		Boolean truth = false;
+		String inputName = inputNode.getName();
+		int inputPriority = inputNode.getPriority();
+		if(inputName.equals(name) == true && inputPriority == priority){
+			truth = true;
+		}
+		return truth;
+	}
+	
+	public int hashCode(){
+		int result = 0;
+		//Calc value for priority
+		int priorityHash = priority;
+		//calc value for string
+		int nameHash = name.length();
+		//combine values
+		result = priorityHash + nameHash;
+		//return value
+		return result;
+	}
 
 }
