@@ -37,8 +37,7 @@ public class Queue{
 			int currentPriority = current.getPriority();
 			result = current.getName();
 			
-			while(current.hasNext() == true){
-				temp = temp.getNext();
+			while(temp != null){
 				if(temp.getPriority() < currentPriority){
 					nodeBeforeHighestPriority = current;
 					currentPriority = temp.getPriority();
@@ -46,6 +45,7 @@ public class Queue{
 					
 				}
 				current = temp;
+				temp = temp.getNext();
 			}
 			if(nodeBeforeHighestPriority == null){
 				temp = root.getNext();

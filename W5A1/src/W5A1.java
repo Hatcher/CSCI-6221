@@ -18,6 +18,8 @@ public class W5A1 {
 		
 		String deq = test.dequeue();
 		System.out.println(deq);
+		deq = test.dequeue();
+		System.out.println(deq);
 		System.out.println("testing");
 		
 		test.printAll();
