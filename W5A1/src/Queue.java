@@ -79,9 +79,9 @@ public class Queue{
 			System.out.print("There is nothing in this queue");
 		}else{
 			System.out.println(temp.getName());
-			while(temp.hasNext() == true){
-				temp = temp.getNext();
+			while(temp != null){
 				System.out.println(temp.getName());
+				temp = temp.getNext();
 				
 			}
 		}
