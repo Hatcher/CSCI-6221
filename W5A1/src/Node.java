@@ -3,6 +3,10 @@ public class Node {
 	private int priority;
 	private String name;
 	private Node next;
+
+	public Node(Node toClone) {
+		this(toClone.getName(), toClone.getPriority());
+	}
 	
 	public Node(String inputName, int inputPriority){
 		next = null;
@@ -10,32 +14,37 @@ public class Node {
 		priority = inputPriority;
 	}
 	
-	void setNext(Node inputNode){
+	public void setNext(Node inputNode){
 		next = inputNode;
 	}
 	
-	Node getNext(){
+	public Node getNext(){
 		return next;
 	}
 	
-	Boolean hasNext(){
-		Boolean result = false;
+	public boolean hasNext(){
+		boolean result = false;
 		if(next != null){
 			result = true;
 		}
 		return result;
 	}
 	
-	String getName(){
+	public String getName(){
 		return name;
 	}
 	
-	int getPriority(){
+	public int getPriority(){
 		return priority;
 	}
 	
-	public Boolean equals(Node inputNode){
-		Boolean truth = false;
+	public boolean equals(Object o){
+		if (o == this) return true;
+		if (!(o instanceof Node)) return false;
+		
+		Node inputNode = (Node) o;
+		
+		boolean truth = false;
 		String inputName = inputNode.getName();
 		int inputPriority = inputNode.getPriority();
 		if(inputName.equals(name) == true && inputPriority == priority){
@@ -55,5 +64,18 @@ public class Node {
 		//return value
 		return result;
 	}
-
+	
+	/**
+	 * Overriding toString()
+	 */
+	public String toString() {
+		return getName() + " (" + getPriority() + ")";
+	}
+	
+	/**
+	 * Overriding clone()
+	 */
+	public Object clone() {
+		return new Node(this);
+	}
 }

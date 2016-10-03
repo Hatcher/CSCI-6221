@@ -1,8 +1,20 @@
 
-public class Queue{
+public class Queue {
 	
 	private Node root;
 
+	public Queue() {
+		this.root = null;
+	}
+	
+	public Queue(Node root) {
+		this.root = root;
+	}
+	
+	public Queue(Queue toClone) {
+		this(toClone.root);
+	}
+	
 	/*
 	 * Enqueue
 	 * Takes a string and an integer as parameters
@@ -86,19 +98,19 @@ public class Queue{
 		}
 	}
 	
-	public String toString(){
-		String result = "Empty queue";
-		return result;
-	}
-	
-	public Boolean equals(Queue inputQueue){
-		Boolean outerTruth = true;
-		Node comparisonNode = root;	
+	public boolean equals(Object o){
 		
+		if (o == this) return true;
+		if (!(o instanceof Queue)) return false;
+
+		Queue inputQueue = (Queue) o;
+		
+		boolean outerTruth = true;
+		Node comparisonNode = root;	
 		
 		while(comparisonNode != null){
 			Node inputComparisonNode = inputQueue.getRoot();
-			Boolean innerTruth = false;
+			boolean innerTruth = false;
 			if(comparisonNode.equals(inputComparisonNode) == true){
 				innerTruth = true;
 			}else{
@@ -132,5 +144,20 @@ public class Queue{
 		}
 		//return result		
 		return result;
+	}
+
+	/**
+	 * Overriding toString()
+	 */
+	public String toString(){
+		String result = "Empty queue";
+		return result;
+	}
+	
+	/**
+	 * Overriding clone()
+	 */
+	public Object clone() {
+		return new Queue(this);
 	}
 }
