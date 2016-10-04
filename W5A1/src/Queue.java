@@ -6,7 +6,7 @@ public class Queue {
 	private Node root;
 
 	public Queue() {
-		this.root = new Node();
+		this.root = null;
 	}
 	
 	public Queue(Node root) {
@@ -14,7 +14,7 @@ public class Queue {
 	}
 	
 	public Queue(Queue toClone) {
-		this(toClone.root);
+		this(toClone.getRoot());
 	}
 	
 	/*
@@ -23,13 +23,18 @@ public class Queue {
 	 * Adds a new node to the list of nodes starting at root 
 	 */
 	void enqueue(String inputName, int inputPriority){
-		Node temp = root;
+		Node temp = getRoot();
 		Node newNode = new Node(inputName, inputPriority);
 		
-		while(temp.hasNext()){
-			temp = temp.getNext();
+		if (temp == null) {
+			root = newNode;
 		}
-		temp.setNext(newNode);	
+		else {
+			while(temp.hasNext()){
+				temp = temp.getNext();
+			}
+			temp.setNext(newNode);
+		}
 	}
 	
 	/*
@@ -37,29 +42,29 @@ public class Queue {
 	 *	Returns the string from the queue that has the highest priority
 	 *	Deletes the node with the highest priority
 	 */
-	public String dequeue(){
-		String result;
-		if(root == null){
-			result = "Empty Queue, nothing to remove";
+	public Node dequeue(){
+		Node result;
+		if(getRoot() == null){
+			return null;
 		}else{
-			Node current = root;
-			Node temp = root;
+			Node current = getRoot();
+			Node temp = getRoot();
 			Node nodeBeforeHighestPriority = null;
 			int currentPriority = current.getPriority();
-			result = current.getName();
+			result = current;
 			
 			while(temp != null){
 				if(temp.getPriority() < currentPriority){
 					nodeBeforeHighestPriority = current;
 					currentPriority = temp.getPriority();
-					result = temp.getName();
+					result = temp;
 					
 				}
 				current = temp;
 				temp = temp.getNext();
 			}
 			if(nodeBeforeHighestPriority == null){
-				temp = root.getNext();
+				temp = getRoot().getNext();
 				root = temp;
 			}else {
 				Node nodeToBeRemoved = nodeBeforeHighestPriority.getNext();
@@ -85,7 +90,7 @@ public class Queue {
 	 * Test to print out what is in the queue
 	 */
 	void printAll(){
-		Node temp = root;
+		Node temp = getRoot();
 		if(temp == null){
 			System.out.print("There is nothing in this queue");
 		}else{
@@ -108,14 +113,14 @@ public class Queue {
 		Queue inputQueue = (Queue) o;
 		
 		EqualsBuilder eb = new EqualsBuilder();
-		Node node = this.root, oNode = inputQueue.root;
-		while (node.hasNext() && oNode.hasNext()) {
+		Node node = getRoot(), oNode = inputQueue.getRoot();
+		while (node != null && oNode != null && node.hasNext() && oNode.hasNext()) {
 			node = node.getNext();
 			oNode = oNode.getNext();
 			eb.append(node, oNode);
 		}
 		
-		if (node.hasNext() || oNode.hasNext()) return false;
+		if ((node != null && node.hasNext()) || (oNode != null && oNode.hasNext())) return false;
 		
 		return eb.isEquals();
 	}
@@ -125,8 +130,8 @@ public class Queue {
 	 */
 	public int hashCode(){
 		HashCodeBuilder hcb = new HashCodeBuilder(17, 31);
-		Node node = this.root;
-		while (node.hasNext()) {
+		Node node = getRoot();
+		while (node != null && node.hasNext()) {
 			node = node.getNext();
 			hcb.append(node);
 		}
@@ -140,8 +145,8 @@ public class Queue {
 	public String toString(){
 		String result = "";
 		
-		Node node = root;
-		while (node.hasNext()) {
+		Node node = getRoot();
+		while (node != null && node.hasNext()) {
 			node = node.getNext();
 			result += node.toString() + "\n";
 		}

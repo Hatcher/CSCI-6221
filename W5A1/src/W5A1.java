@@ -42,6 +42,7 @@ public class W5A1 {
 		System.out.println("Clone:\t\t" + (testQueue_Clone(q) ? "PASS" : "FAIL"));
 		System.out.println("HashCode:\t" + (testQueue_HashCode(q) ? "PASS" : "FAIL"));
 		System.out.println("ToString:\t" + (testQueue_ToString(q) ? "PASS" : "FAIL"));
+		System.out.println("Queue FNs:\t" + (testQueue_QueueFns() ? "PASS" : "FAIL"));
 	}
 	
 	private static boolean testQueue_Equals(Queue q1, Queue q2) {
@@ -82,6 +83,29 @@ public class W5A1 {
 		
 		// Should equal
 		return (q1.toString().equals(q2.toString()));
+	}
+
+	private static boolean testQueue_QueueFns() {
+		Queue q1 = new Queue();
+		
+		q1.enqueue("test", 0);
+		Node n = q1.dequeue();
+		
+		if (!n.getName().equals("test")) return false;
+
+		q1.enqueue(n.getName(), 1);
+		q1.enqueue(n.getName(), 2);
+		q1.enqueue(n.getName(), 3);
+		q1.enqueue(n.getName(), 4);
+		q1.enqueue(n.getName(), 5);
+
+		Node n1 = q1.dequeue();
+		Node n2 = q1.dequeue();
+		Node n3 = q1.dequeue();
+		Node n4 = q1.dequeue();
+		Node n5 = q1.dequeue();
+		
+		return (n1.getPriority() == 1 && n2.getPriority() == 2 && n3.getPriority() == 3 && n4.getPriority() == 4 && n5.getPriority() == 5);
 	}
 }
 
