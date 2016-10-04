@@ -1,10 +1,12 @@
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Queue {
 	
 	private Node root;
 
 	public Queue() {
-		this.root = null;
+		this.root = new Node();
 	}
 	
 	public Queue(Node root) {
@@ -23,14 +25,11 @@ public class Queue {
 	void enqueue(String inputName, int inputPriority){
 		Node temp = root;
 		Node newNode = new Node(inputName, inputPriority);
-		if(temp == null){
-			root = newNode;
-		}else{
-			while(temp.hasNext() == true){
-				temp = temp.getNext();
-			}
-			temp.setNext(newNode);
+		
+		while(temp.hasNext()){
+			temp = temp.getNext();
 		}
+		temp.setNext(newNode);	
 	}
 	
 	/*
@@ -98,6 +97,9 @@ public class Queue {
 		}
 	}
 	
+	/**
+	 * Overriding equals
+	 */
 	public boolean equals(Object o){
 		
 		if (o == this) return true;
@@ -105,52 +107,44 @@ public class Queue {
 
 		Queue inputQueue = (Queue) o;
 		
-		boolean outerTruth = true;
-		Node comparisonNode = root;	
-		
-		while(comparisonNode != null){
-			Node inputComparisonNode = inputQueue.getRoot();
-			boolean innerTruth = false;
-			if(comparisonNode.equals(inputComparisonNode) == true){
-				innerTruth = true;
-			}else{
-				while(inputComparisonNode != null){
-					if(comparisonNode.equals(inputComparisonNode) == true){
-						innerTruth = true;
-					}
-					inputComparisonNode = inputComparisonNode.getNext();
-				}
-			}
-			inputComparisonNode = inputQueue.getRoot();
-			if(outerTruth == false || innerTruth == false){
-				outerTruth = false;
-			}
-			comparisonNode = comparisonNode.getNext();
+		EqualsBuilder eb = new EqualsBuilder();
+		Node node = this.root, oNode = inputQueue.root;
+		while (node.hasNext() && oNode.hasNext()) {
+			node = node.getNext();
+			oNode = oNode.getNext();
+			eb.append(node, oNode);
 		}
-		return outerTruth;
+		
+		if (node.hasNext() || oNode.hasNext()) return false;
+		
+		return eb.isEquals();
 	}
 	
+	/**
+	 * Overriding hashCode()
+	 */
 	public int hashCode(){
-		int result = 0;
-		Node temp = root;
-		//for each node in queue
-		while(temp != null){
-			//find hashCode() of node
-			int nodeHash = temp.hashCode();
-			//add nodeHash to result
-			result = result + nodeHash;
-			//go to next node
-			temp = temp.getNext();
+		HashCodeBuilder hcb = new HashCodeBuilder(17, 31);
+		Node node = this.root;
+		while (node.hasNext()) {
+			node = node.getNext();
+			hcb.append(node);
 		}
-		//return result		
-		return result;
+		
+		return hcb.toHashCode();
 	}
 
 	/**
 	 * Overriding toString()
 	 */
 	public String toString(){
-		String result = "Empty queue";
+		String result = "";
+		
+		Node node = root;
+		while (node.hasNext()) {
+			node = node.getNext();
+			result += node.toString() + "\n";
+		}
 		return result;
 	}
 	

@@ -1,9 +1,14 @@
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 
 public class Node {
 	private int priority;
 	private String name;
 	private Node next;
 
+	public Node() {}
+	
 	public Node(Node toClone) {
 		this(toClone.getName(), toClone.getPriority());
 	}
@@ -38,31 +43,29 @@ public class Node {
 		return priority;
 	}
 	
+	/**
+	 * Updated equals() method to follow Java standards
+	 */
 	public boolean equals(Object o){
 		if (o == this) return true;
 		if (!(o instanceof Node)) return false;
 		
-		Node inputNode = (Node) o;
+		Node node = (Node) o;
 		
-		boolean truth = false;
-		String inputName = inputNode.getName();
-		int inputPriority = inputNode.getPriority();
-		if(inputName.equals(name) == true && inputPriority == priority){
-			truth = true;
-		}
-		return truth;
+		return new EqualsBuilder()
+			.append(this.getName(), node.getName())
+			.append(this.getPriority(), node.getPriority())
+			.isEquals();
 	}
 	
+	/**
+	 * Updated hashCode() to follow Java standards
+	 */
 	public int hashCode(){
-		int result = 0;
-		//Calc value for priority
-		int priorityHash = priority;
-		//calc value for string
-		int nameHash = name.length();
-		//combine values
-		result = priorityHash + nameHash;
-		//return value
-		return result;
+		return new HashCodeBuilder(17, 31)
+			.append(priority)
+			.append(name)
+			.toHashCode();
 	}
 	
 	/**
